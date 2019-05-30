@@ -15,6 +15,30 @@ class Bookings {
   upgradeRoom(date) {
     console.log(date);
   }
+
+  getAvailableRooms(today) {
+    console.log(today);
+  }
+
+  getOccupiedRoomsRatio(today) {
+    console.log(today);
+  }
+
+  findPopularBookingDate() {
+    //
+  }
+
+  findBestBookingDate() {
+    //
+  }
+
+  getBookingHistory() {
+    //
+  }
+
+  getCurrentBookings() {
+    //
+  }
 }
 
 export default Bookings;
