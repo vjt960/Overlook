@@ -1,12 +1,7 @@
-import fetch from 'cross-fetch';
-
-let netData;
-fetch('https://fe-apps.herokuapp.com/api/v1/overlook/1903/bookings/bookings')
-  .then(response => response.json())
-  .then(dataset => netData = dataset.bookings);
+import netData from '../../fetch-data/data';
 
 class Bookings {
-  constructor(data = netData, rooms) {
+  constructor(data = netData.bookingsData, rooms) {
     this.bookings = data;
     this.rooms = rooms;
   }
