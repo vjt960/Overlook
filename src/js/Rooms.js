@@ -1,4 +1,4 @@
-import netData from '../../fetch-data/data';
+// import netData from '../../fetch-data/data';
 
 class Rooms {
   constructor(data = netData.roomsData) {
