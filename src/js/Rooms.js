@@ -10,12 +10,12 @@ class Rooms {
     this.all = data;
   }
 
-  findBynumber(num) {
+  findByNumber(num) {
     return this.all.find(room => room.number === num);
   }
 
-  findByType(type) {
-    return this.all.find(room => room.roomType === type);
+  filterByType(type) {
+    return this.all.filter(room => room.roomType === type);
   }
 }
 

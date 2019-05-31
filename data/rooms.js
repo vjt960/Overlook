@@ -1,4 +1,4 @@
-let rooms = [
+let roomsData = [
   {
     number: 1,
     roomType: "residential suite",
@@ -401,4 +401,4 @@ let rooms = [
   }
 ];
 
-export default rooms;
+export default roomsData;
