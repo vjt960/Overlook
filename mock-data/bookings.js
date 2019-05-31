@@ -1,4 +1,4 @@
-let bookings = [
+let bookingsData = [
   {
     userID: 1,
     date: "21/08/2019",
@@ -16,12 +16,12 @@ let bookings = [
   },
   {
     userID: 7,
-    date: "17/07/2019",
+    date: "31/08/2019",
     roomNumber: 19
   },
   {
     userID: 9,
-    date: "15/01/2020",
+    date: "31/08/2019",
     roomNumber: 29
   },
   {
@@ -51,4 +51,4 @@ let bookings = [
   }
 ];
 
-export default bookings;
+export default bookingsData;
