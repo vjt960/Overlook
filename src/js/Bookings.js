@@ -38,10 +38,15 @@ class Bookings {
     return rooms.filter(room => bookedRooms.includes(room.number) === false);
   }
 
-  getOccupiedRoomsRatio(today) {
-    let open = this.getAvailableRooms(today).length;
-    let closed = 200 - open;
-    return (closed / 200) * 100;
+  filterVacantRoomsByType(type) {
+    //capture array of vacant rooms;
+    //filter by type;
+  }
+
+  getOccupancyRatio(today) {
+    let vacant = this.getAvailableRooms(today).length;
+    let occupied = this.rooms.length - vacant;
+    return (occupied / this.rooms.length) * 100;
   }
 
   findPopularBookingDate() {
