@@ -2,38 +2,38 @@
 
 class Bookings {
   constructor(data = netData.bookingsData, rooms) {
-    this.bookings = data;
+    this.all = data;
     this.rooms = rooms;
   }
   
   bookRoom(user, date, rmNumber) {
-    if (this.bookings.find(booking => booking.date === date)) {
+    if (this.all.find(booking => booking.date === date)) {
       this.returnError();
     } else {
       let book = {userID: [user.id], date: [date], roomNumber: [rmNumber]};
-      this.bookings.push(book);
+      this.all.push(book);
     }
   }
 
   unbookRoom(rmNumber) {
-    let index = this.bookings
+    let index = this.all
       .indexOf(booking => booking.roomNumber === rmNumber);
     index === -1 ? this.returnError() 
-      : this.bookings.splice(index, 1);
+      : this.all.splice(index, 1);
   }
 
-  upgradeRoom(date) {
+  upgradeRoom(userID, date, newRoom) {
     console.log(date);
   }
 
   getAvailableRooms(today) {
-    let rooms = this.rooms.slice();
-    let bookedRooms = this.bookings.filter(booking => booking.date === today)
+    let rooms = this.rooms;
+    let bookedRooms = this.all.filter(booking => booking.date === today)
       .map(booking => booking.roomNumber);
     return rooms.filter(room => bookedRooms.includes(room.number) === false);
   }
 
-  filterVacantRoomsByType(type) {
+  filterRoomsByType(rooms, type) {
     //capture array of vacant rooms;
     //filter by type;
   }
@@ -48,15 +48,15 @@ class Bookings {
     //
   }
 
-  findBestBookingDate() {
+  findBestBookingDate(today) {
     //
   }
 
-  getBookingHistory() {
+  getUserHistory(userId) {
     //
   }
 
-  getCurrentBookings() {
+  getCurrentBookings(today) {
     //
   }
 
