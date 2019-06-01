@@ -1,7 +1,7 @@
 // import netData from '../../fetch-data/data';
 
 class Bookings {
-  constructor(data = netData.bookingsData, rooms) {
+  constructor(data, rooms) {
     this.all = data;
     this.rooms = rooms;
   }

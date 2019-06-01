@@ -1,20 +1,20 @@
 class CustomerRepo {
   constructor(data) {
-    this.customers = data;
+    this.all = data;
   }
 
   findUsername(name) {
-    return this.customers.find(user => user.name === name);
+    return this.all.find(user => user.name === name);
   }
 
   findUserID(id) {
-    return this.customers.find(user => user.id === id);
+    return this.all.find(user => user.id === id);
   }
 
   addUser(firstName, lastName) {
     let userName = `${firstName} ${lastName}`;
-    let userID = this.customers.length + 1;
-    this.customers.push({id: [userID], name: [userName]});
+    let userID = this.all.length + 1;
+    this.all.push({id: [userID], name: [userName]});
   }
 }
 

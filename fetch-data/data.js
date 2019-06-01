@@ -18,18 +18,27 @@ let serviceData = fetch('https://fe-apps.herokuapp.com'
   .then(dataset => serviceData = dataset.roomServices)
   .catch((err) => err);
 
+let customerData = fetch('https://fe-apps.herokuapp.com' 
+  + '/api/v1/overlook/1903/users/users')
+  .then(response => response.json())
+  .then(dataset => customerData = dataset.users)
+  .catch((err) => err);
+  
 let netData = {
-  'roomsData': {}, 
-  'bookingsData': {}, 
-  'serviceData': {}
+  'roomsData': {},
+  'bookingsData': {},
+  'serviceData': {},
+  'customerData': {}
 };
-
-Promise.all([roomsData, bookingsData, serviceData])
+  
+export let xData = Promise
+  .all([roomsData, bookingsData, serviceData, customerData])
   .then(function(values) {
     netData["roomsData"] = values[0];
     netData["bookingsData"] = values[1];
     netData['serviceData'] = values[2];
+    netData['customerData'] = values[3];
     return netData;
-  });
-
-export default netData;
+  }).then(function(dataset) {
+    xData = dataset;
+  })

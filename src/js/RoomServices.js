@@ -1,8 +1,8 @@
 // import netData from '../../fetch-data/data';
 
 class RoomServices {
-  constructor(services = netData.serviceData) {
-    this.services = services;
+  constructor(services) {
+    this.all = services;
   }
 
   calculateBill(userID) {
