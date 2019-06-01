@@ -4,6 +4,15 @@
 // An example of how you import jQuery into a JS file if you use jQuery in that file
 import $ from 'jquery';
 
+import netData from '.././fetch-data/data';
+import Rooms from './js/Rooms';
+import Bookings from './js/Bookings';
+import RoomServices from './js/RoomServices';
+import Hotel from './js/Hotel';
+import Customers from './js/CustomerRepo';
+import Admin from './js/Admin';
+
+
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/base.scss';
 
@@ -11,3 +20,8 @@ import './css/base.scss';
 import './images/turing-logo.png'
 
 console.log('This is the JavaScript entry file - your code begins here.');
+
+
+$(document).ready(() => {
+  console.log(netData);
+})
