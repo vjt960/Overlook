@@ -2,7 +2,7 @@
 
 class RoomServices {
   constructor(services) {
-    this.services = services;
+    this.all = services;
   }
 
   calculateBill(userID) {
