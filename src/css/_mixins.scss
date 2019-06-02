@@ -1,4 +1,9 @@
-@mixin gridBlock(gridArea) {
-  grid-area: gridArea;
+@mixin labelGrid($gridArea) {
+  grid-area: $gridArea;
   background-color: $secondary;
+}
+
+@mixin resetSpacing() {
+  margin: 0;
+  padding: 0;
 }

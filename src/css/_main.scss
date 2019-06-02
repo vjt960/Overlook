@@ -1,8 +1,8 @@
 body {
   line-height: 1.6;
   box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+  font-family: $subText;
+  @include resetSpacing();
 }
 
 header{
@@ -11,22 +11,24 @@ header{
   height: 200px;
   color: #fff;
 
-  h1 {
-    color: #fff;
-    margin: 0;
-    padding: 0;
+  h1,
+  h2 {
+    color: $primary;
+    font-family: $superText;
+    @include resetSpacing();
   }
 }
 
-main {background-color: $ruby;}
+main {
+  background-color: $ruby;
+}
 
 .tabs-container {
   width: 100%;
   margin: 0 auto;
 
   ul.tabs{
-    margin: 0px;
-    padding: 0px;
+    @include resetSpacing();
     list-style: none;
   
     & li{
@@ -34,9 +36,13 @@ main {background-color: $ruby;}
       color: $primary;
       display: inline-block;
       padding: 10px 15px;
+      font-family: $superText;
       cursor: pointer;
 
-      &:hover {color: $secondary}
+      &:hover {
+        color: $secondary;
+        font-family: $subText;
+      }
     
       &.active {
         background: $primary;
@@ -50,9 +56,13 @@ main {background-color: $ruby;}
     background: $primary;
     padding: 15px;
     height: 500px;
+    text-align: center;
 
     h3 {
       color: $tertiary;
+      font-family: $superText;
+      font-size: 22px;
+      @include resetSpacing();
     }
   
     &.active {
@@ -73,16 +83,15 @@ main {background-color: $ruby;}
   height: 100%;
 
   .main-booking {
-    @include gridBlock(booking);
+    @include labelGrid(booking);
   }
   .main-orders {
-    @include gridBlock(orders);
+    @include labelGrid(orders);
   }
   .main-rooms {
-    @include gridBlock(rooms);
+    @include labelGrid(rooms);
   }
   .main-admin {
-    grid-area: admin;
-    background-color: $secondary;
+    @include labelGrid(admin);
   }
 }
