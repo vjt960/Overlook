@@ -1,0 +1,97 @@
+body {
+  line-height: 1.6;
+  box-sizing: border-box;
+  font-family: $subText;
+  @include resetSpacing();
+}
+
+header{
+  background-color: #101010;
+  width: 100%;
+  height: 200px;
+  color: #fff;
+
+  h1,
+  h2 {
+    color: $primary;
+    font-family: $superText;
+    @include resetSpacing();
+  }
+}
+
+main {
+  background-color: $ruby;
+}
+
+.tabs-container {
+  width: 100%;
+  margin: 0 auto;
+
+  ul.tabs{
+    @include resetSpacing();
+    list-style: none;
+  
+    & li{
+      background: none;
+      color: $primary;
+      display: inline-block;
+      padding: 10px 15px;
+      font-family: $superText;
+      cursor: pointer;
+
+      &:hover {
+        color: $secondary;
+        font-family: $subText;
+      }
+    
+      &.active {
+        background: $primary;
+        color: #000;
+      }
+    }
+  }
+  
+  .tab-content {
+    display: none;
+    background: $primary;
+    padding: 15px;
+    height: 500px;
+    text-align: center;
+
+    h3 {
+      color: $tertiary;
+      font-family: $superText;
+      font-size: 22px;
+      @include resetSpacing();
+    }
+  
+    &.active {
+      display: inherit;
+    }
+  }
+}
+
+.main-grid-container {
+  display: grid;
+  grid-gap: 2.5px 5px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 0fr 1fr;
+  grid-template-areas: 
+  "booking orders rooms rooms" 
+  "booking orders . ." 
+  "booking orders admin admin";
+  height: 100%;
+
+  .main-booking {
+    @include labelGrid(booking);
+  }
+  .main-orders {
+    @include labelGrid(orders);
+  }
+  .main-rooms {
+    @include labelGrid(rooms);
+  }
+  .main-admin {
+    @include labelGrid(admin);
+  }
+}

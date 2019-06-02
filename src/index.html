@@ -1,11 +1,42 @@
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
-    <title>Webpack Starter Kit</title>
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans:600|Reem+Kufi&display=swap" rel="stylesheet">
+    <title>Overlook | Hotel Management Suite</title>
   </head>
   <body>
-    <h1>Webpack Starter Kit</h1>
-    <main>Bullshit goes here</main>
-    <!-- Do not include the index.js or main.bundle.js file here - it is done automatically by the webpack server -->
+    <header>
+      <h1>Overlook</h1>
+      <h2>Date&Time</h2>
+    </header>
+    <main>
+      <div class="tabs-container">  
+        <ul class="tabs">
+          <li class="tab-link active" data-tab="tab-1">MAIN</li>
+          <li class="tab-link" data-tab="tab-2">ORDERS</li>
+          <li class="tab-link" data-tab="tab-3">ROOMS</li>
+          <li class="tab-link" data-tab="tab-4">CUSTOMER</li>
+        </ul>
+        <section id="tab-1" class="tab-content active">
+          <div class="main-grid-container">
+            <article class="main-booking">
+              <h3>Lead Bookings</h3>
+            </article>
+            <article class="main-orders">
+              <h3>Active Orders</h3>
+            </article>
+            <article class="main-rooms">
+              <h3>Room Availability</h3>
+            </article>
+            <article class="main-admin">
+              <h3>Manager On Duty</h3>
+            </article>
+          </div>
+        </section>
+        <section id="tab-2" class="tab-content">orders content</section>
+        <section id="tab-3" class="tab-content">rooms content</section>
+        <section id="tab-4" class="tab-content">customer content</section>
+      </div>
+    </main>
   </body>
 </html>

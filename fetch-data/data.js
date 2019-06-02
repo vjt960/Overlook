@@ -33,11 +33,11 @@ let netData = {
   
 export let xData = Promise
   .all([roomsData, bookingsData, serviceData, customerData])
-  .then(function(values) {
-    netData["roomsData"] = values[0];
-    netData["bookingsData"] = values[1];
-    netData['serviceData'] = values[2];
-    netData['customerData'] = values[3];
+  .then(function(response) {
+    netData["roomsData"] = response[0];
+    netData["bookingsData"] = response[1];
+    netData['serviceData'] = response[2];
+    netData['customerData'] = response[3];
     return netData;
   }).then(function(dataset) {
     xData = dataset;
