@@ -2,10 +2,6 @@ import $ from 'jquery';
 
 export default {
 
-  test() {
-    console.log('placeholder for domUpdate');
-  },
-
   postTodaysBookings(booking) {
     $('.main-booking').append(`<p>here some ${booking.date} shit</p>`);
   },
