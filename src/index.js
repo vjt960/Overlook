@@ -45,7 +45,7 @@ async function loadFetchData() {
 function showToday() {
   let today = new Date();
   let dd = String(today.getDate()).padStart(2, '0');
-  let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  let mm = String(today.getMonth() + 1).padStart(2, '0');
   let yyyy = today.getFullYear();
   return `${dd}/${mm}/${yyyy}`
 }
@@ -67,10 +67,11 @@ function displayTimeNow() {
 
 async function loadMainTab() {
   await data;
+  admin;
   // let books = admin.bookings.getCurrentBookings(showToday());
   // let services = admin.services.getTotalDebt(showToday());
   // let report = admin.bookings.getOccupancyRatio(showToday());
-  let books = [{date: 'booking1'}, {date: 'booking2'}, {date: 'booking3'}, {date: 'booking4'}];
+  let books = [{date: 'booking1'}, {date: 'booking2'}, {date: 'booking3'}];
   let services = [{date: 'order'}, {date: 'order'}, {date: 'order'}];
   books.forEach(book => domUpdates.postTodaysBookings(book));
   services.forEach(order => domUpdates.postTodaysOrders(order));
