@@ -1,6 +1,96 @@
 /* This is an example of using Sass, otherwise plain CSS works too*/
-$primary-background: pink;
+$primary: hsla(32, 56%, 95%, 1);
+$secondary: hsla(37, 31%, 87%, 1);
+$tertiary: hsla(29, 14%, 45%, 1);
+$shade: hsla(0, 0%, 15%, .3);
+$ruby: hsla(354, 80%, 34%, .9);
+$berry: hsla(358, 69%, 55%, 1);
 
 body {
-  background-color: $primary-background;
+  line-height: 1.6;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+header{
+  background-color: #101010;
+  width: 100%;
+  height: 200px;
+  color: #fff;
+
+  h1 {
+    color: #fff;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+main {background-color: $ruby;}
+
+.tabs-container {
+  width: 100%;
+  margin: 0 auto;
+
+  ul.tabs{
+    margin: 0px;
+    padding: 0px;
+    list-style: none;
+  
+    & li{
+      background: none;
+      color: $primary;
+      display: inline-block;
+      padding: 10px 15px;
+      cursor: pointer;
+
+      &:hover {color: $secondary}
+    
+      &.active {
+        background: $primary;
+        color: #000;
+      }
+    }
+  }
+  
+  .tab-content {
+    display: none;
+    background: $primary;
+    padding: 15px;
+    height: 500px;
+
+    h3 {
+      color: $tertiary;
+    }
+  
+    &.active {
+      display: inherit;
+    }
+  }
+}
+
+.main-grid-container {
+  display: grid;
+  grid-gap: 2.5px 5px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 0fr 1fr;
+  grid-template-areas: "booking orders rooms rooms" "booking orders . ." "booking orders admin admin";
+  height: 100%;
+
+  .main-booking {
+    grid-area: booking;
+    background-color: $secondary;
+  }
+  .main-orders {
+    grid-area: orders;
+    background-color: $secondary;
+  }
+  .main-rooms {
+    grid-area: rooms;
+    background-color: $secondary;
+  }
+  .main-admin {
+    grid-area: admin;
+    background-color: $secondary;
+  }
 }
