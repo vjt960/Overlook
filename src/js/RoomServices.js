@@ -14,7 +14,7 @@ class RoomServices {
   }
 
   getTotalDebt(today) {
-    console.log(today);
+    return this.all.filter(order => order.date === today);
   }
 
   returnError() {
