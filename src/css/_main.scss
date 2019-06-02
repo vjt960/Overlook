@@ -7,6 +7,8 @@ body {
 
 header{
   background-color: #101010;
+  display: flex;
+  justify-content: space-between;
   width: 100%;
   height: 200px;
   color: #fff;
@@ -16,6 +18,10 @@ header{
     color: $primary;
     font-family: $superText;
     @include resetSpacing();
+  }
+
+  h2 {
+    align-self: flex-end;
   }
 }
 
@@ -41,7 +47,6 @@ main {
 
       &:hover {
         color: $secondary;
-        font-family: $subText;
       }
     
       &.active {

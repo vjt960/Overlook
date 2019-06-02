@@ -57,7 +57,7 @@ class Bookings {
   }
 
   getCurrentBookings(today) {
-    //
+    return this.all.filter(booking => booking.date === today);
   }
 
   returnError() {
