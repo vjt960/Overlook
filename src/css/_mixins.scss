@@ -1,0 +1,4 @@
+@mixin gridBlock(gridArea) {
+  grid-area: gridArea;
+  background-color: $secondary;
+}
