@@ -30,7 +30,7 @@ class Bookings {
     let rooms = this.rooms;
     let bookedRooms = this.all.filter(booking => booking.date === today)
       .map(booking => booking.roomNumber);
-    return rooms.filter(room => bookedRooms.includes(room.number) === false);
+    return rooms.all.filter(room => bookedRooms.includes(room.number) === false);
   }
 
   filterRoomsByType(rooms, type) {
@@ -40,8 +40,8 @@ class Bookings {
 
   getOccupancyRatio(today) {
     let vacant = this.getAvailableRooms(today).length;
-    let occupied = this.rooms.length - vacant;
-    return (occupied / this.rooms.length) * 100;
+    let occupied = this.rooms.all.length - vacant;
+    return (occupied / vacant) * 100;
   }
 
   findPopularBookingDate() {

@@ -41,4 +41,4 @@ export let xData = Promise
     return netData;
   }).then(function(dataset) {
     xData = dataset;
-  })
+  });

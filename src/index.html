@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
-      <link href="https://fonts.googleapis.com/css?family=Open+Sans:600|Reem+Kufi&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:600|Reem+Kufi&display=swap" rel="stylesheet">
     <title>Overlook | Hotel Management Suite</title>
   </head>
   <body>
@@ -35,7 +35,24 @@
         </section>
         <section id="tab-2" class="tab-content">orders content</section>
         <section id="tab-3" class="tab-content">rooms content</section>
-        <section id="tab-4" class="tab-content">customer content</section>
+        <section id="tab-4" class="tab-content">
+          <div class="customer-grid-container">
+            <article class="customer-add-guest">
+              <h4>Add New Guest</h4>
+              <form class="customer-add-form">
+                <input placeholder="First Name" class="customer-first-name" type="text">
+                <input placeholder="Last Name" class="customer-last-name" type="text">
+                <input class="customer-submit-btn" type="submit">
+              </form>
+            </article>
+            <article class="customer-search-guests">
+              <h4>Search Guests</h4>
+            </article>
+            <article class="customer-current-guest">
+              Selected Guest
+            </article>
+          </div>
+        </section>
       </div>
     </main>
   </body>
