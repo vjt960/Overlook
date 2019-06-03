@@ -11,7 +11,8 @@ export default {
   },
 
   postNumOfOpenRooms(rooms) {
-    $('.main-rooms').append(`<p>Rooms available: ${rooms.length}`);
+    $('.main-rooms')
+      .append(`<p>Rooms available: ${rooms.length} out of ${200}`);
   },
 
   postFillRate(ratio) {
@@ -24,5 +25,15 @@ export default {
     debt = orders.length < 1 ? 0 
       : orders.reduce((a, b) => a + b.totalCost);
     $('.main-orders').append(`<p>Today's debt: $${debt}</p>`);
+  },
+
+  selectUser(user) {
+    $('#active-guest').text(user.name);
+  },
+
+  noUserError(attempt) {
+    const error = `Error: ${attempt} is not a guest here. CALL SECURITY.`;
+    $('#active-guest').text('');
+    $('#error').text(error);
   }
 }
