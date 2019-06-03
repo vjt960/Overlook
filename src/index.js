@@ -3,7 +3,7 @@ import $ from 'jquery';
 import {xData as data} from '.././fetch-data/data';
 import Rooms from './js/Rooms';
 import Bookings from './js/Bookings';
-import RoomServices from './js/RoomServices';
+import Services from './js/Services';
 import Hotel from './js/Hotel';
 import CustomerRepo from './js/CustomerRepo';
 import Admin from './js/Admin';
@@ -22,7 +22,8 @@ $(document).ready(() => {
   loadMainTab();
 });
 
-$('ul.tabs li').click(function() {
+$('ul.tabs li').click(function(e) {
+  e.preventDefault();
   let tabID = $(this).attr('data-tab');
   $('ul.tabs li').removeClass('active');
   $('.tab-content').removeClass('active');
@@ -30,16 +31,31 @@ $('ul.tabs li').click(function() {
   $(`#${tabID}`).addClass('active');
 });
 
+$('.customer-search-form').submit(function(event) {
+  event.preventDefault();
+  let user = admin.customers.findUsername($('.customer-search-input').val());
+  if (user) {
+    admin.currentCustomer = user;
+    console.log(admin);
+    domUpdates.selectUser(user);
+    $('.customer-search-input').val('');
+  } else {
+    domUpdates.noUserError($('.customer-search-input').val());
+    null
+  }
+})
+
 //--------- FUNCTIONS --------->
 
 async function loadFetchData() {
   await data;
   const rooms = new Rooms(data.roomsData);
   const bookings = new Bookings(data.bookingsData, rooms);
-  const services = new RoomServices(data.serviceData);
+  const services = new Services(data.serviceData);
   const hotel = new Hotel(bookings, services);
   const customers = new CustomerRepo(data.customerData);
   admin = new Admin(customers, hotel);
+  console.log(admin)
 }
 
 function showToday() {
