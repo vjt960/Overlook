@@ -3,6 +3,20 @@ body {
   box-sizing: border-box;
   font-family: $subText;
   @include resetSpacing();
+
+  input {
+    @include moldInput(#000, $tertiary);
+    &[type="submit"] {
+      height: 35px;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+    &[type="text"] {
+      background-color: #fff;
+      font-size: 16px;
+    }
+  }
 }
 
 header{
@@ -78,15 +92,7 @@ main {
 }
 
 .main-grid-container {
-  display: grid;
-  grid-gap: 2.5px 5px;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 0fr 1fr;
-  grid-template-areas: 
-  "booking orders rooms rooms" 
-  "booking orders . ." 
-  "booking orders admin admin";
-  height: 100%;
+  @include gridMainContent();
 
   .main-booking {
     @include labelGrid(booking);
@@ -99,5 +105,24 @@ main {
   }
   .main-admin {
     @include labelGrid(admin);
+  }
+}
+
+.customer-grid-container {
+  @include gridGuestContent();
+  
+  .customer-add-guest {
+    @include labelGrid(addNew);
+  }
+  .customer-search-guests {
+    @include labelGrid(search);
+  }
+  .customer-current-guest {
+    @include labelGrid(current);
+  }
+
+  .customer-add-form {
+    @include setDimensions(60%, 60%, 0);
+    @include flexColumnCenter();
   }
 }

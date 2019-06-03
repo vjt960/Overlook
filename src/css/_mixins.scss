@@ -7,3 +7,48 @@
   margin: 0;
   padding: 0;
 }
+
+@mixin setDimensions($height, $width, $padding) {
+  height: $height;
+  width: $width;
+  padding: $padding;
+}
+
+@mixin flexColumnCenter() {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: auto;
+}
+
+@mixin gridMainContent() {
+  display: grid;
+  grid-gap: 2.5px 5px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 0fr 1fr;
+  grid-template-areas: 
+  "booking orders rooms rooms" 
+  "booking orders . ." 
+  "booking orders admin admin";
+  height: 100%;
+}
+
+@mixin gridGuestContent() {
+  display: grid;
+  grid-gap: 10px 10px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-areas: 
+  "addNew addNew search search" 
+  "addNew addNew search search" 
+  "addNew addNew current current";
+  height: 100%;
+}
+
+@mixin moldInput($textColor, $inputColor) {
+  outline: none;
+  height: 25px;
+  width: 100%;
+  color: $textColor;
+  background-color: $inputColor;
+}
