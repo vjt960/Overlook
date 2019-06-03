@@ -67,12 +67,15 @@ function displayTimeNow() {
 
 async function loadMainTab() {
   await data;
-  admin;
   // let books = admin.bookings.getCurrentBookings(showToday());
   // let services = admin.services.getTotalDebt(showToday());
   // let report = admin.bookings.getOccupancyRatio(showToday());
+  let openRooms = admin.bookings.getAvailableRooms(showToday());
   let books = [{date: 'booking1'}, {date: 'booking2'}, {date: 'booking3'}];
   let services = [{date: 'order'}, {date: 'order'}, {date: 'order'}];
+  domUpdates.postTodaysDebt(admin.services.getTotalDebt(showToday()));
+  domUpdates.postNumOfOpenRooms(openRooms);
+  domUpdates.postFillRate(admin.bookings.getOccupancyRatio(showToday()));
   books.forEach(book => domUpdates.postTodaysBookings(book));
   services.forEach(order => domUpdates.postTodaysOrders(order));
 }
