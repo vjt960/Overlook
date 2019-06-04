@@ -11,7 +11,7 @@ import domUpdates from './js/domUpdates';
 // An example of how you tell webpack to use a CSS (SCSS) file
 import './css/index.scss';
 // Example of how to use an image (need to link to it in index.html)
-import './images/turing-logo.png';
+import './images/wallpaper.jpg';
 
 //--------- VARIABLES --------->
 let admin;
