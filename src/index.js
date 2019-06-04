@@ -22,8 +22,7 @@ $(document).ready(() => {
   loadMainTab();
 });
 
-$('ul.tabs li').click(function(e) {
-  e.preventDefault();
+$('ul.tabs li').click(function() {
   let tabID = $(this).attr('data-tab');
   $('ul.tabs li').removeClass('active');
   $('.tab-content').removeClass('active');
@@ -41,8 +40,27 @@ $('.customer-search-form').submit(function(event) {
     $('.customer-search-input').val('');
   } else {
     domUpdates.noUserError($('.customer-search-input').val());
-    null
+    $('.customer-search-input').val('');
   }
+});
+
+$('.customer-submit-btn').click(function(event) {
+  event.preventDefault();
+  let firstName = $('.customer-first-name').val();
+  let lastName = $('.customer-last-name').val();
+  let newUser = admin.customers.addUser(firstName, lastName);
+  admin.currentCustomer = newUser;
+  domUpdates.selectUser(newUser);
+  $('.customer-first-name').val('');
+  $('.customer-last-name').val('');
+  console.log(admin);
+});
+
+$('.rooms-search-form').submit(function(event) {
+  event.preventDefault();
+  let date = $('.rooms-search-input').val();
+  let rooms = admin.bookings.getAvailableRooms(date);
+  domUpdates.updateRoomsTable(rooms);
 })
 
 //--------- FUNCTIONS --------->
@@ -83,15 +101,16 @@ function displayTimeNow() {
 
 async function loadMainTab() {
   await data;
-  // let books = admin.bookings.getCurrentBookings(showToday());
-  // let services = admin.services.getTotalDebt(showToday());
-  // let report = admin.bookings.getOccupancyRatio(showToday());
+  let books = admin.bookings.getCurrentBookings(showToday());
+  let services = admin.services.getTotalDebt(showToday());
   let openRooms = admin.bookings.getAvailableRooms(showToday());
-  let books = [{date: 'booking1'}, {date: 'booking2'}, {date: 'booking3'}];
-  let services = [{date: 'order'}, {date: 'order'}, {date: 'order'}];
+  let popularDate = admin.bookings.findPopularBookingDate();
+  let unpopularDate = admin.bookings.findBestBookingDate();
+  domUpdates.postBookingDates(popularDate, unpopularDate);
   domUpdates.postTodaysDebt(admin.services.getTotalDebt(showToday()));
   domUpdates.postNumOfOpenRooms(openRooms);
   domUpdates.postFillRate(admin.bookings.getOccupancyRatio(showToday()));
+  domUpdates.postRoomAvailabilitMessage();
   books.forEach(book => domUpdates.postTodaysBookings(book));
   services.forEach(order => domUpdates.postTodaysOrders(order));
 }
