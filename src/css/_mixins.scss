@@ -74,11 +74,23 @@
   .rooms-orders { @include labelGrid(orders);}
 
   .rooms-admin-table {
-    border-collapse: collapse;
-    margin: auto;
-    width: 95%;
-    text-align: center;
+    @include defaultTable();
   }
+
+  .rooms-user-table {
+    @include defaultTable();
+  }
+
+  .rooms-orders-table {
+    @include defaultTable();
+  }
+}
+
+@mixin defaultTable() {
+  border-collapse: collapse;
+  margin: auto;
+  width: 95%;
+  text-align: center;
 }
 
 @mixin gridGuestContent() {
