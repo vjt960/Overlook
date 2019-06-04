@@ -58,7 +58,13 @@ $('.rooms-search-form').submit(function(event) {
   let date = $('.rooms-search-input').val();
   let rooms = admin.bookings.getAvailableRooms(date);
   domUpdates.updateRoomsTable(rooms);
-})
+});
+
+$('.rooms-user-table').click(function(event) {
+  event.preventDefault();
+  unbookRoom(event);
+  // upgradeRoom(event);
+});
 
 //--------- FUNCTIONS --------->
 
@@ -107,4 +113,18 @@ function loadUserBookings(user) {
 
 function loadUserOrders() {
   //
+}
+
+function unbookRoom(event) {
+  if (!$(event.target).hasClass('unbook')) {
+    return null;
+  } else {
+    let user = admin.currentCustomer;
+    let dataID = $(event.target).closest('tr').attr('data-id');
+    let index = admin.bookings.all
+      .indexOf(booking => 
+        (booking.date === dataID && booking.userID === user.id));
+    admin.bookings.all.splice(index, 1);
+    $(event.target).closest('tr').remove();
+  }
 }

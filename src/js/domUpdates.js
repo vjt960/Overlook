@@ -98,7 +98,7 @@ export default {
         let room = admin.rooms.all.find(rm => rm.number === book.roomNumber);
         let avail = room.bidet ? 'Yes' : 'No';
         $('.rooms-user-table').append(`
-        <tr id="bk${room.number}" class="booked">
+        <tr id="bk${book.date}" data-id="${book.date}" class="booked">
         <td>${room.number}</td>
         <td><input type="submit" 
         value="${room.roomType.toUpperCase()}" 
@@ -108,7 +108,7 @@ export default {
         <td>${room.bedSize}</td>
         <td>${avail}</td>
         <td>${book.date}</td>
-        <td><input id="unbook${room.number}" value="Cancel" type="submit"></td>
+        <td><input class="unbook" id="unbook${room.number}" value="Cancel" type="submit"></td>
         </tr>`);
       });
     }
