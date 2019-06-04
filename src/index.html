@@ -10,6 +10,7 @@
       <h2>Date&Time</h2>
     </header>
     <main>
+      <figure class="customer"></figure>
       <div class="tabs-container">  
         <ul class="tabs">
           <li class="tab-link active" data-tab="tab-1">MAIN</li>
@@ -34,7 +35,32 @@
           </div>
         </section>
         <section id="tab-2" class="tab-content">orders content</section>
-        <section id="tab-3" class="tab-content">rooms content</section>
+        <section id="tab-3" class="tab-content">
+          <div class="rooms-grid-container">
+            <article class="rooms-search">
+              <legend>Search Available Rooms</legend>
+              <form class="rooms-search-form">
+                <input class="rooms-search-btn" type="submit" value="Search">
+                <input class="rooms-search-input" placeholder="Search By Date" type="search">
+              </form>
+              <h5 class="rooms-booking-date"></h5>
+            </article>
+            <article class="rooms-vacant">
+              <h4>Room Availability</h4>
+              <legend id="rooms-count"></legend>
+              <table class="rooms-admin-table" border="1">
+                <tr>
+                  <th>Room #</th><th>Room Type</th><th>Beds</th>
+                  <th>Bed Size</th><th>Bidet</th><th>$/Night</th>
+                  <th>Book Room</th>
+                </tr>
+              </table>
+            </article>
+            <article class="rooms-user"></article>
+            <article class="rooms-space"></article>
+            <article class="rooms-orders"></article>
+          </div>
+        </section>
         <section id="tab-4" class="tab-content">
           <div class="customer-grid-container">
             <article class="customer-add-guest">
@@ -42,14 +68,14 @@
               <form class="customer-add-form">
                 <input placeholder="First Name" class="customer-first-name" type="text">
                 <input placeholder="Last Name" class="customer-last-name" type="text">
-                <input class="customer-submit-btn" type="submit">
+                <input class="customer-submit-btn" type="submit" value="Add New Guest">
               </form>
             </article>
             <article class="customer-search-guests">
               <h4>Search Guests</h4>
               <form class="customer-search-form">
-                <input type="search" class="customer-search-input">
-                <input type="submit" class="customer-search-btn">
+                <input type="search" placeholder="Search Guest By Name" class="customer-search-input">
+                <input type="submit" class="customer-search-btn" value="Search">
                 <h5 id="error"></h5>
               </form>
             </article>

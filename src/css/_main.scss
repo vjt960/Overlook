@@ -4,8 +4,13 @@ body {
   font-family: $subText;
   @include resetSpacing();
 
+  form {
+    @include setDimensions(60%, 60%, 0);
+    @include flexColumnCenter();
+  }
+
   input {
-    @include moldInput(#000, $tertiary);
+    @include moldInput(#000, $berry);
     &[type="submit"] {
       height: 35px;
       &:hover {
@@ -43,6 +48,13 @@ header{
 
 main {
   background-color: $ruby;
+  position: relative;
+  figure {
+    @include resetSpacing();
+    float: right;
+    font-size: 25px;
+    margin: 0 25%;
+  }
 }
 
 .tabs-container {
@@ -94,36 +106,12 @@ main {
 
 .main-grid-container {
   @include gridMainContent();
-
-  .main-booking {
-    @include labelGrid(booking);
-  }
-  .main-orders {
-    @include labelGrid(orders);
-  }
-  .main-rooms {
-    @include labelGrid(rooms);
-  }
-  .main-admin {
-    @include labelGrid(admin);
-  }
 }
 
 .customer-grid-container {
   @include gridGuestContent();
-  
-  .customer-add-guest {
-    @include labelGrid(addNew);
-  }
-  .customer-search-guests {
-    @include labelGrid(search);
-  }
-  .customer-current-guest {
-    @include labelGrid(current);
-  }
+}
 
-  form {
-    @include setDimensions(60%, 60%, 0);
-    @include flexColumnCenter();
-  }
+.rooms-grid-container {
+  @include gridRoomsContent();
 }
