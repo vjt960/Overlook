@@ -32,11 +32,11 @@ export default {
     $('.rooms-booking-date').text(banner);
   },
 
-  postRoomAvailabilitMessage() {
-    $('.rooms-admin-table')
+  postTableMessage(selector, message) {
+    $(selector)
       .append(`
-      <tr class="book">
-      <td colspan="7">Search For Available Rooms</td>
+      <tr class="message">
+      <td colspan="7">${message}</td>
       </tr>`);
   },
 
@@ -54,23 +54,24 @@ export default {
   },
 
   updateRoomsTable(rooms) {
-    if (!rooms) {
+    if (rooms.length < 0) {
+      $('.message').remove();
       $('.book').remove();
-      noRoomsError();
+      this.noRoomsError();
     } else {
       $('.book').remove();
+      $('.message').remove();
       rooms.forEach(room => {
         let avail = room.bidet ? 'Yes' : 'No';
-        $('.rooms-admin-table')
-          .append(`
-          <tr class="book">
+        $('.rooms-admin-table').append(`
+          <tr id="rm${room.number}" class="book">
           <td>${room.number}</td>
           <td>${room.roomType}</td>
           <td>${room.numBeds}</td>
           <td>${room.bedSize}</td>
           <td>${avail}</td>
           <td>$${room.costPerNight}</td>
-          <td><input id="${room.number}" value="Book" type="submit"></td>
+          <td><input id="book${room.number}" value="Book" type="submit"></td>
           </tr>`);
       });
       $('.rooms-search-input').val('');
@@ -83,5 +84,40 @@ export default {
       <tr class="book">
       <td colspan="7">Error: No Rooms Available</td>
       </tr>`);
+  },
+
+  postUserBookings(admin, books) {
+    if (books.length < 0) {
+      $('.booked').remove();
+      $('.message').remove();
+      this.noBookingsError();
+    } else {
+      $('.booked').remove();
+      $('.message').remove();
+      books.forEach(book => {
+        let room = admin.rooms.all.find(rm => rm.number === book.roomNumber);
+        let avail = room.bidet ? 'Yes' : 'No';
+        $('.rooms-user-table').append(`
+        <tr id="bk${room.number}" class="booked">
+        <td>${room.number}</td>
+        <td><input type="submit" 
+        value="${room.roomType.toUpperCase()}" 
+        id="upgrade${room.number}">
+        </td>
+        <td>${room.numBeds}</td>
+        <td>${room.bedSize}</td>
+        <td>${avail}</td>
+        <td>${book.date}</td>
+        <td><input id="unbook${room.number}" value="Cancel" type="submit"></td>
+        </tr>`);
+      });
+    }
+  },
+
+  noBookingsError() {
+    $('.rooms-user-table').append(`<tr class="book">
+    <td colspan="7">Error: No Rooms Booked Under This Guest</td>
+    </tr>`);
   }
+
 }
