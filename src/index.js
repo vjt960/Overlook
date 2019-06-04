@@ -8,14 +8,15 @@ import Hotel from './js/Hotel';
 import CustomerRepo from './js/CustomerRepo';
 import Admin from './js/Admin';
 import domUpdates from './js/domUpdates';
+import utility from './js/utility';
 import './css/index.scss';
 //--------- VARIABLES --------->
 let admin;
 //--------- EVENT LISTENERS --------->
 $(document).ready(() => {
-  setInterval(displayTimeNow, 1000);
   loadFetchData();
   loadMainTab();
+  setInterval(utility.displayClock, 1000);
 });
 
 $('ul.tabs li').click(function() {
@@ -71,40 +72,17 @@ async function loadFetchData() {
   admin = new Admin(customers, hotel);
 }
 
-function showToday() {
-  let today = new Date();
-  let dd = String(today.getDate()).padStart(2, '0');
-  let mm = String(today.getMonth() + 1).padStart(2, '0');
-  let yyyy = today.getFullYear();
-  return `${dd}/${mm}/${yyyy}`
-}
-
-function showTime() {
-  let d = new Date();
-  let s = d.getSeconds();
-  let m = d.getMinutes();
-  let h = d.getHours();
-  h = h < 10 ? `0${h}` : `${h}`;
-  m = m < 10 ? `0${m}` : `${m}`;
-  s = s < 10 ? `0${s}` : `${s}`;
-  return `${h}:${m}:${s}`;
-}
-
-function displayTimeNow() {
-  $('h2').text(`${showToday()} ${showTime()}`);
-}
-
 async function loadMainTab() {
   await data;
-  const books = admin.bookings.getCurrentBookings(showToday());
-  const services = admin.services.getTotalDebt(showToday());
-  const openRooms = admin.bookings.getAvailableRooms(showToday());
+  const books = admin.bookings.getCurrentBookings(utility.showToday());
+  const services = admin.services.getTotalDebt(utility.showToday());
+  const openRooms = admin.bookings.getAvailableRooms(utility.showToday());
   const popularDate = admin.bookings.findPopularBookingDate();
   const unpopularDate = admin.bookings.findBestBookingDate();
   domUpdates.postBookingDates(popularDate, unpopularDate);
-  domUpdates.postTodaysDebt(admin.services.getTotalDebt(showToday()));
+  domUpdates.postTodaysDebt(admin.services.getTotalDebt(utility.showToday()));
   domUpdates.postNumOfOpenRooms(openRooms);
-  domUpdates.postFillRate(admin.bookings.getOccupancyRatio(showToday()));
+  domUpdates.postFillRate(admin.bookings.getOccupancyRatio(utility.showToday()));
   domUpdates.postTableMessage('.rooms-admin-table', 'Search Available Rooms');
   domUpdates.postTableMessage('.rooms-user-table', 'Select A Guest');
   domUpdates.postTableMessage('.rooms-orders-table', 'Select A Guest');
