@@ -30,7 +30,10 @@ class Bookings {
     let rooms = this.rooms;
     let bookedRooms = this.all.filter(booking => booking.date === today)
       .map(booking => booking.roomNumber);
-    return rooms.all.filter(room => bookedRooms.includes(room.number) === false);
+    let avail = rooms.all
+      .filter(room => bookedRooms
+        .includes(room.number) === false);
+    return avail.sort((a, b) => a.roomType.length - b.roomType.length);
   }
 
   filterRoomsByType(rooms, type) {
@@ -45,15 +48,25 @@ class Bookings {
   }
 
   findPopularBookingDate() {
-    //
+    let counter = this.all.reduce((a, b) => {
+      a[b.date] = (a[b.date] || 0) + 1;
+      return a;
+    }, {});
+    let target = Math.max(...Object.values(counter));
+    return Object.keys(counter).find(obj => counter[obj] === target);
   }
 
-  findBestBookingDate(today) {
-    //
+  findBestBookingDate() {
+    let counter = this.all.reduce((a, b) => {
+      a[b.date] = (a[b.date] || 0) + 1;
+      return a;
+    }, {});
+    let target = Math.min(...Object.values(counter));
+    return Object.keys(counter).find(obj => counter[obj] === target);
   }
 
   getUserHistory(userId) {
-    //
+    return this.all.filter(booking => booking.userID === userId);
   }
 
   getCurrentBookings(today) {

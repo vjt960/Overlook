@@ -14,7 +14,9 @@ class CustomerRepo {
   addUser(firstName, lastName) {
     let userName = `${firstName} ${lastName}`;
     let userID = this.all.length + 1;
-    this.all.push({id: [userID], name: [userName]});
+    let newUser = {id: userID, name: userName}
+    this.all.push(newUser);
+    return newUser;
   }
 }
 

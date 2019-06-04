@@ -31,6 +31,66 @@
   "booking orders . ." 
   "booking orders admin admin";
   height: 100%;
+
+  .main-booking { @include labelGrid(booking);}
+  .main-orders { @include labelGrid(orders);}
+  .main-rooms { @include labelGrid(rooms);}
+  .main-admin { @include labelGrid(admin);}
+}
+
+@mixin gridRoomsContent() {
+  display: grid;
+  grid-gap: 10px 10px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 2fr 2fr;
+  grid-template-areas: 
+  "search search spaces spaces" 
+  "vacant vacant spaces spaces" 
+  "vacant vacant spaces spaces" 
+  "vacant vacant orders orders" 
+  "vacant vacant orders orders";
+  height: 100%;
+
+  .rooms-search {
+    @include labelGrid(search);
+    
+    .rooms-search-form {
+      height: 100%;
+      width: 55%;
+      display: flex;
+      flex-direction: row;
+      .rooms-search-btn {
+      width: 100px;
+      height: 22px;
+      }
+    }
+  }
+  .rooms-vacant {
+    @include labelGrid(vacant);
+    overflow-y: auto;    
+  }
+  .rooms-user { @include labelGrid(user);}
+  .rooms-space { @include labelGrid(spaces);}
+  .rooms-orders { @include labelGrid(orders);}
+
+  .rooms-admin-table {
+    @include defaultTable();
+  }
+
+  .rooms-user-table {
+    @include defaultTable();
+  }
+
+  .rooms-orders-table {
+    @include defaultTable();
+  }
+}
+
+@mixin defaultTable() {
+  border-collapse: collapse;
+  margin: auto;
+  width: 95%;
+  text-align: center;
 }
 
 @mixin gridGuestContent() {
@@ -43,6 +103,10 @@
   "addNew addNew search search" 
   "addNew addNew current current";
   height: 100%;
+
+  .customer-add-guest { @include labelGrid(addNew);}
+  .customer-search-guests { @include labelGrid(search);}
+  .customer-current-guest { @include labelGrid(current);}
 }
 
 @mixin moldInput($textColor, $inputColor) {

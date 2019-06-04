@@ -3,23 +3,20 @@ import $ from 'jquery';
 import {xData as data} from '.././fetch-data/data';
 import Rooms from './js/Rooms';
 import Bookings from './js/Bookings';
-import RoomServices from './js/RoomServices';
+import Services from './js/Services';
 import Hotel from './js/Hotel';
 import CustomerRepo from './js/CustomerRepo';
 import Admin from './js/Admin';
 import domUpdates from './js/domUpdates';
-// An example of how you tell webpack to use a CSS (SCSS) file
+import utility from './js/utility';
 import './css/index.scss';
-// Example of how to use an image (need to link to it in index.html)
-import './images/turing-logo.png';
-
 //--------- VARIABLES --------->
 let admin;
 //--------- EVENT LISTENERS --------->
 $(document).ready(() => {
-  setInterval(displayTimeNow, 1000);
   loadFetchData();
   loadMainTab();
+  setInterval(utility.displayClock, 1000);
 });
 
 $('ul.tabs li').click(function() {
@@ -30,52 +27,80 @@ $('ul.tabs li').click(function() {
   $(`#${tabID}`).addClass('active');
 });
 
+$('.customer-search-form').submit(function(event) {
+  event.preventDefault();
+  let user = admin.customers.findUsername($('.customer-search-input').val());
+  if (user) {
+    admin.currentCustomer = user;
+    domUpdates.selectUser(user);
+    loadSelectedUserData(user);
+    $('.customer-search-input').val('');
+  } else {
+    domUpdates.noUserError($('.customer-search-input').val());
+    $('.customer-search-input').val('');
+  }
+});
+
+$('.customer-submit-btn').click(function(event) {
+  event.preventDefault();
+  let firstName = $('.customer-first-name').val();
+  let lastName = $('.customer-last-name').val();
+  let newUser = admin.customers.addUser(firstName, lastName);
+  admin.currentCustomer = newUser;
+  domUpdates.selectUser(newUser);
+  loadSelectedUserData(newUser);
+  $('.customer-first-name').val('');
+  $('.customer-last-name').val('');
+});
+
+$('.rooms-search-form').submit(function(event) {
+  event.preventDefault();
+  let date = $('.rooms-search-input').val();
+  let rooms = admin.bookings.getAvailableRooms(date);
+  domUpdates.updateRoomsTable(rooms);
+})
+
 //--------- FUNCTIONS --------->
 
 async function loadFetchData() {
   await data;
   const rooms = new Rooms(data.roomsData);
   const bookings = new Bookings(data.bookingsData, rooms);
-  const services = new RoomServices(data.serviceData);
+  const services = new Services(data.serviceData);
   const hotel = new Hotel(bookings, services);
   const customers = new CustomerRepo(data.customerData);
   admin = new Admin(customers, hotel);
 }
 
-function showToday() {
-  let today = new Date();
-  let dd = String(today.getDate()).padStart(2, '0');
-  let mm = String(today.getMonth() + 1).padStart(2, '0');
-  let yyyy = today.getFullYear();
-  return `${dd}/${mm}/${yyyy}`
-}
-
-function showTime() {
-  let d = new Date();
-  let s = d.getSeconds();
-  let m = d.getMinutes();
-  let h = d.getHours();
-  h = h < 10 ? `0${h}` : `${h}`;
-  m = m < 10 ? `0${m}` : `${m}`;
-  s = s < 10 ? `0${s}` : `${s}`;
-  return `${h}:${m}:${s}`;
-}
-
-function displayTimeNow() {
-  $('h2').text(`${showToday()} ${showTime()}`);
-}
-
 async function loadMainTab() {
   await data;
-  // let books = admin.bookings.getCurrentBookings(showToday());
-  // let services = admin.services.getTotalDebt(showToday());
-  // let report = admin.bookings.getOccupancyRatio(showToday());
-  let openRooms = admin.bookings.getAvailableRooms(showToday());
-  let books = [{date: 'booking1'}, {date: 'booking2'}, {date: 'booking3'}];
-  let services = [{date: 'order'}, {date: 'order'}, {date: 'order'}];
-  domUpdates.postTodaysDebt(admin.services.getTotalDebt(showToday()));
+  const books = admin.bookings.getCurrentBookings(utility.showToday());
+  const services = admin.services.getTotalDebt(utility.showToday());
+  const openRooms = admin.bookings.getAvailableRooms(utility.showToday());
+  const popularDate = admin.bookings.findPopularBookingDate();
+  const unpopularDate = admin.bookings.findBestBookingDate();
+  domUpdates.postBookingDates(popularDate, unpopularDate);
+  domUpdates.postTodaysDebt(admin.services.getTotalDebt(utility.showToday()));
   domUpdates.postNumOfOpenRooms(openRooms);
-  domUpdates.postFillRate(admin.bookings.getOccupancyRatio(showToday()));
+  domUpdates.postFillRate(admin.bookings
+    .getOccupancyRatio(utility.showToday()));
+  domUpdates.postTableMessage('.rooms-admin-table', 'Search Available Rooms');
+  domUpdates.postTableMessage('.rooms-user-table', 'Select A Guest');
+  domUpdates.postTableMessage('.rooms-orders-table', 'Select A Guest');
   books.forEach(book => domUpdates.postTodaysBookings(book));
   services.forEach(order => domUpdates.postTodaysOrders(order));
+}
+
+function loadSelectedUserData(user) {
+  loadUserBookings(user);
+  loadUserOrders(user);
+}
+
+function loadUserBookings(user) {
+  const books = admin.bookings.getUserHistory(user.id);
+  domUpdates.postUserBookings(admin, books);
+}
+
+function loadUserOrders() {
+  //
 }

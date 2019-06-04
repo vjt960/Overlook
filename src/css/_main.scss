@@ -4,15 +4,21 @@ body {
   font-family: $subText;
   @include resetSpacing();
 
+  form {
+    @include setDimensions(60%, 60%, 0);
+    @include flexColumnCenter();
+  }
+
   input {
-    @include moldInput(#000, $tertiary);
+    @include moldInput(#000, $berry);
     &[type="submit"] {
       height: 35px;
       &:hover {
         cursor: pointer;
       }
     }
-    &[type="text"] {
+    &[type="text"],
+    &[type="search"] {
       background-color: #fff;
       font-size: 16px;
     }
@@ -21,6 +27,7 @@ body {
 
 header{
   background-color: #101010;
+  background-image: url('../images/wallpaper.jpg');
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -32,16 +39,38 @@ header{
     color: $primary;
     font-family: $superText;
     @include resetSpacing();
-    margin: 0 10px;
+    margin: 0 15px;
+  }
+
+  h1 {
+    font-size: 55px;
+
   }
 
   h2 {
     align-self: flex-end;
+    font-size: 40px;
   }
 }
 
 main {
   background-color: $ruby;
+  position: relative;
+  figure {
+    @include resetSpacing();
+    float: right;
+    font-size: 25px;
+    margin: 0 25%;
+    text-shadow: #FC0 1px 0 10px;
+  }
+
+  h4 {
+    @include resetSpacing();
+    color: $berry;
+    font-family: $superText;
+    font-size: 25px;
+    margin: 5px;
+  }
 }
 
 .tabs-container {
@@ -93,36 +122,12 @@ main {
 
 .main-grid-container {
   @include gridMainContent();
-
-  .main-booking {
-    @include labelGrid(booking);
-  }
-  .main-orders {
-    @include labelGrid(orders);
-  }
-  .main-rooms {
-    @include labelGrid(rooms);
-  }
-  .main-admin {
-    @include labelGrid(admin);
-  }
 }
 
 .customer-grid-container {
   @include gridGuestContent();
-  
-  .customer-add-guest {
-    @include labelGrid(addNew);
-  }
-  .customer-search-guests {
-    @include labelGrid(search);
-  }
-  .customer-current-guest {
-    @include labelGrid(current);
-  }
+}
 
-  .customer-add-form {
-    @include setDimensions(60%, 60%, 0);
-    @include flexColumnCenter();
-  }
+.rooms-grid-container {
+  @include gridRoomsContent();
 }

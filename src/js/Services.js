@@ -1,6 +1,6 @@
 // import netData from '../../fetch-data/data';
 
-class RoomServices {
+class Services {
   constructor(services) {
     this.all = services;
   }
@@ -22,4 +22,4 @@ class RoomServices {
   }
 }
 
-export default RoomServices;
+export default Services;
