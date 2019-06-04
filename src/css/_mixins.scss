@@ -42,9 +42,9 @@
   display: grid;
   grid-gap: 10px 10px;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 2fr 2fr;
   grid-template-areas: 
-  "search search user user" 
+  "search search spaces spaces" 
   "vacant vacant spaces spaces" 
   "vacant vacant spaces spaces" 
   "vacant vacant orders orders" 

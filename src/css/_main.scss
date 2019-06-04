@@ -56,6 +56,14 @@ main {
     font-size: 25px;
     margin: 0 25%;
   }
+
+  h4 {
+    @include resetSpacing();
+    color: $berry;
+    font-family: $superText;
+    font-size: 25px;
+    margin: 5px;
+  }
 }
 
 .tabs-container {
