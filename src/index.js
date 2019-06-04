@@ -82,7 +82,8 @@ async function loadMainTab() {
   domUpdates.postBookingDates(popularDate, unpopularDate);
   domUpdates.postTodaysDebt(admin.services.getTotalDebt(utility.showToday()));
   domUpdates.postNumOfOpenRooms(openRooms);
-  domUpdates.postFillRate(admin.bookings.getOccupancyRatio(utility.showToday()));
+  domUpdates.postFillRate(admin.bookings
+    .getOccupancyRatio(utility.showToday()));
   domUpdates.postTableMessage('.rooms-admin-table', 'Search Available Rooms');
   domUpdates.postTableMessage('.rooms-user-table', 'Select A Guest');
   domUpdates.postTableMessage('.rooms-orders-table', 'Select A Guest');
