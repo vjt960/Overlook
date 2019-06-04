@@ -2,8 +2,10 @@ import $ from 'jquery';
 
 export default {
 
-  postTodaysBookings(booking) {
-    $('.main-booking').append(`<p>here some ${booking.date} shit</p>`);
+  postTodaysBookings(booking, userList, rooms) {
+    let user = userList.find(user => user.id === booking.userID).name;
+    let room = rooms.find(room => room.number === booking.roomNumber).roomType;
+    $('.main-booking').append(`<p>${user} | Room #${booking.roomNumber} | ${room}</p>`);
   },
 
   postTodaysOrders(order) {
@@ -24,7 +26,7 @@ export default {
     let debt;
     debt = orders.length < 1 ? 0 
       : orders.reduce((a, b) => a + b.totalCost);
-    $('.main-orders').append(`<p>Today's debt: $${debt}</p>`);
+    $('.main-orders').append(`<p>Today's earnings: $${debt}</p>`);
   },
 
   postBookingDates(date1, date2) {
@@ -54,7 +56,7 @@ export default {
   },
 
   updateRoomsTable(rooms) {
-    if (rooms.length < 0) {
+    if (rooms.length < 1) {
       $('.message').remove();
       $('.book').remove();
       this.noRoomsError();
@@ -63,17 +65,21 @@ export default {
       $('.message').remove();
       rooms.forEach(room => {
         let avail = room.bidet ? 'Yes' : 'No';
+        let newClass = [...room.roomType]
+          .filter(letter => letter !== ' ')
+          .join('');
         $('.rooms-admin-table').append(`
-          <tr id="rm${room.number}" class="book">
+          <tr id="rm${room.number}" class="book ${newClass}">
           <td>${room.number}</td>
-          <td>${room.roomType}</td>
+          <td>${room.roomType.toUpperCase()}</td>
           <td>${room.numBeds}</td>
-          <td>${room.bedSize}</td>
+          <td>${room.bedSize.toUpperCase()}</td>
           <td>${avail}</td>
           <td>$${room.costPerNight}</td>
           <td><input id="book${room.number}" value="Book" type="submit"></td>
           </tr>`);
       });
+      $('#rooms-count').text(`${rooms.length} rooms available on ${$('.rooms-search-input').val()}`);
       $('.rooms-search-input').val('');
     }
   },
@@ -81,13 +87,13 @@ export default {
   noRoomsError() {
     $('.rooms-admin-table')
       .append(`
-      <tr class="book">
+      <tr class="book error">
       <td colspan="7">Error: No Rooms Available</td>
       </tr>`);
   },
 
   postUserBookings(admin, books) {
-    if (books.length < 0) {
+    if (books.length < 1) {
       $('.booked').remove();
       $('.message').remove();
       this.noBookingsError();
@@ -98,7 +104,7 @@ export default {
         let room = admin.rooms.all.find(rm => rm.number === book.roomNumber);
         let avail = room.bidet ? 'Yes' : 'No';
         $('.rooms-user-table').append(`
-        <tr id="bk${room.number}" class="booked">
+        <tr data-id="${book.date}" class="booked">
         <td>${room.number}</td>
         <td><input type="submit" 
         value="${room.roomType.toUpperCase()}" 
@@ -108,16 +114,25 @@ export default {
         <td>${room.bedSize}</td>
         <td>${avail}</td>
         <td>${book.date}</td>
-        <td><input id="unbook${room.number}" value="Cancel" type="submit"></td>
+        <td><input class="unbook" value="Cancel" type="submit"></td>
         </tr>`);
       });
     }
   },
 
   noBookingsError() {
-    $('.rooms-user-table').append(`<tr class="book">
+    $('.rooms-user-table').append(`<tr class="booked error">
     <td colspan="7">Error: No Rooms Booked Under This Guest</td>
     </tr>`);
+  },
+
+  filterRoomsList(type) {
+    if (type === 'no-val') {
+      $('.book').show();
+    } else {
+      $('.book').hide();
+      $(`.${type}`).show();
+    }
   }
 
 }

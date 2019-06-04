@@ -21,7 +21,7 @@
         <section id="tab-1" class="tab-content active">
           <div class="main-grid-container">
             <article class="main-booking">
-              <h4>Today's Bookings</h4>
+              <h4>Today's Reservations</h4>
             </article>
             <article class="main-orders">
               <h4>Active Orders</h4>
@@ -40,6 +40,14 @@
             <article class="rooms-search">
               <legend>Search Available Rooms</legend>
               <form class="rooms-search-form">
+                <input type="button" class="rooms-filter-btn" value="Filter">
+                <select class="select-suite">
+                  <option value="no-val">Filter by Type:</option>
+                  <option value="singleroom">Single Room</option>
+                  <option value="juniorsuite">Junior Suite</option>
+                  <option value="suite">Suite</option>
+                  <option value="residentialsuite">Residential Suite</option>
+                </select>
                 <input class="rooms-search-btn" type="submit" value="Search">
                 <input class="rooms-search-input" placeholder="Search By Date" type="search">
               </form>
@@ -92,7 +100,7 @@
               <form class="customer-search-form">
                 <input type="search" placeholder="Search Guest By Name" class="customer-search-input">
                 <input type="submit" class="customer-search-btn" value="Search">
-                <h5 id="error"></h5>
+                <h5 class="error" id="error"></h5>
               </form>
             </article>
             <article class="customer-current-guest">

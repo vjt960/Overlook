@@ -15,11 +15,8 @@ class Bookings {
     }
   }
 
-  unbookRoom(rmNumber) {
-    let index = this.all
-      .indexOf(booking => booking.roomNumber === rmNumber);
-    index === -1 ? this.returnError() 
-      : this.all.splice(index, 1);
+  unbookRoom(index) {
+    this.all.splice(index, 1);
   }
 
   upgradeRoom(userID, date, newRoom) {
