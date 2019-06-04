@@ -8,11 +8,7 @@ import Hotel from './js/Hotel';
 import CustomerRepo from './js/CustomerRepo';
 import Admin from './js/Admin';
 import domUpdates from './js/domUpdates';
-// An example of how you tell webpack to use a CSS (SCSS) file
 import './css/index.scss';
-// Example of how to use an image (need to link to it in index.html)
-import './images/wallpaper.jpg';
-
 //--------- VARIABLES --------->
 let admin;
 //--------- EVENT LISTENERS --------->
@@ -35,8 +31,8 @@ $('.customer-search-form').submit(function(event) {
   let user = admin.customers.findUsername($('.customer-search-input').val());
   if (user) {
     admin.currentCustomer = user;
-    console.log(admin);
     domUpdates.selectUser(user);
+    loadSelectedUserData(user);
     $('.customer-search-input').val('');
   } else {
     domUpdates.noUserError($('.customer-search-input').val());
@@ -51,9 +47,9 @@ $('.customer-submit-btn').click(function(event) {
   let newUser = admin.customers.addUser(firstName, lastName);
   admin.currentCustomer = newUser;
   domUpdates.selectUser(newUser);
+  loadSelectedUserData(newUser);
   $('.customer-first-name').val('');
   $('.customer-last-name').val('');
-  console.log(admin);
 });
 
 $('.rooms-search-form').submit(function(event) {
@@ -73,7 +69,6 @@ async function loadFetchData() {
   const hotel = new Hotel(bookings, services);
   const customers = new CustomerRepo(data.customerData);
   admin = new Admin(customers, hotel);
-  console.log(admin)
 }
 
 function showToday() {
@@ -101,16 +96,32 @@ function displayTimeNow() {
 
 async function loadMainTab() {
   await data;
-  let books = admin.bookings.getCurrentBookings(showToday());
-  let services = admin.services.getTotalDebt(showToday());
-  let openRooms = admin.bookings.getAvailableRooms(showToday());
-  let popularDate = admin.bookings.findPopularBookingDate();
-  let unpopularDate = admin.bookings.findBestBookingDate();
+  const books = admin.bookings.getCurrentBookings(showToday());
+  const services = admin.services.getTotalDebt(showToday());
+  const openRooms = admin.bookings.getAvailableRooms(showToday());
+  const popularDate = admin.bookings.findPopularBookingDate();
+  const unpopularDate = admin.bookings.findBestBookingDate();
   domUpdates.postBookingDates(popularDate, unpopularDate);
   domUpdates.postTodaysDebt(admin.services.getTotalDebt(showToday()));
   domUpdates.postNumOfOpenRooms(openRooms);
   domUpdates.postFillRate(admin.bookings.getOccupancyRatio(showToday()));
-  domUpdates.postRoomAvailabilitMessage();
+  domUpdates.postTableMessage('.rooms-admin-table', 'Search Available Rooms');
+  domUpdates.postTableMessage('.rooms-user-table', 'Select A Guest');
+  domUpdates.postTableMessage('.rooms-orders-table', 'Select A Guest');
   books.forEach(book => domUpdates.postTodaysBookings(book));
   services.forEach(order => domUpdates.postTodaysOrders(order));
+}
+
+function loadSelectedUserData(user) {
+  loadUserBookings(user);
+  loadUserOrders(user);
+}
+
+function loadUserBookings(user) {
+  const books = admin.bookings.getUserHistory(user.id);
+  domUpdates.postUserBookings(admin, books);
+}
+
+function loadUserOrders() {
+  //
 }
