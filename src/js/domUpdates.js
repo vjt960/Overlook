@@ -54,7 +54,7 @@ export default {
   },
 
   updateRoomsTable(rooms) {
-    if (rooms.length < 0) {
+    if (rooms.length < 1) {
       $('.message').remove();
       $('.book').remove();
       this.noRoomsError();
@@ -81,13 +81,13 @@ export default {
   noRoomsError() {
     $('.rooms-admin-table')
       .append(`
-      <tr class="book">
+      <tr class="book error">
       <td colspan="7">Error: No Rooms Available</td>
       </tr>`);
   },
 
   postUserBookings(admin, books) {
-    if (books.length < 0) {
+    if (books.length < 1) {
       $('.booked').remove();
       $('.message').remove();
       this.noBookingsError();
@@ -115,7 +115,7 @@ export default {
   },
 
   noBookingsError() {
-    $('.rooms-user-table').append(`<tr class="book">
+    $('.rooms-user-table').append(`<tr class="booked error">
     <td colspan="7">Error: No Rooms Booked Under This Guest</td>
     </tr>`);
   }
