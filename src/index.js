@@ -79,16 +79,20 @@ async function loadMainTab() {
   const openRooms = admin.bookings.getAvailableRooms(utility.showToday());
   const popularDate = admin.bookings.findPopularBookingDate();
   const unpopularDate = admin.bookings.findBestBookingDate();
+  displayPlaceholders();
   domUpdates.postBookingDates(popularDate, unpopularDate);
   domUpdates.postTodaysDebt(admin.services.getTotalDebt(utility.showToday()));
   domUpdates.postNumOfOpenRooms(openRooms);
   domUpdates.postFillRate(admin.bookings
     .getOccupancyRatio(utility.showToday()));
+  books.forEach(book => domUpdates.postTodaysBookings(book));
+  services.forEach(order => domUpdates.postTodaysOrders(order));
+}
+
+function displayPlaceholders() {
   domUpdates.postTableMessage('.rooms-admin-table', 'Search Available Rooms');
   domUpdates.postTableMessage('.rooms-user-table', 'Select A Guest');
   domUpdates.postTableMessage('.rooms-orders-table', 'Select A Guest');
-  books.forEach(book => domUpdates.postTodaysBookings(book));
-  services.forEach(order => domUpdates.postTodaysOrders(order));
 }
 
 function loadSelectedUserData(user) {
