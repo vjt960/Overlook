@@ -27,7 +27,7 @@ $('ul.tabs li').click(function() {
   $(`#${tabID}`).addClass('active');
 });
 
-$('.customer-search-form').submit(function(event) {
+$('.customer-search-form').submit(event => {
   event.preventDefault();
   let user = admin.customers.findUsername($('.customer-search-input').val());
   if (user) {
@@ -41,7 +41,7 @@ $('.customer-search-form').submit(function(event) {
   }
 });
 
-$('.customer-submit-btn').click(function(event) {
+$('.customer-submit-btn').click(event => {
   event.preventDefault();
   let firstName = $('.customer-first-name').val();
   let lastName = $('.customer-last-name').val();
@@ -53,17 +53,24 @@ $('.customer-submit-btn').click(function(event) {
   $('.customer-last-name').val('');
 });
 
-$('.rooms-search-form').submit(function(event) {
+$('.rooms-search-form').submit(event => {
   event.preventDefault();
   let date = $('.rooms-search-input').val();
   let rooms = admin.bookings.getAvailableRooms(date);
   domUpdates.updateRoomsTable(rooms);
+  let type = $('.select-suite').val();
+  domUpdates.filterRoomsList(type);
 });
 
-$('.rooms-user-table').click(function(event) {
+$('.rooms-user-table').click(event => {
   event.preventDefault();
   unbookRoom(event);
   // upgradeRoom(event);
+});
+
+$('.rooms-search-form').click(() => {
+  let type = $('.select-suite').val();
+  domUpdates.filterRoomsList(type);
 });
 
 //--------- FUNCTIONS --------->
@@ -91,7 +98,7 @@ async function loadMainTab() {
   domUpdates.postNumOfOpenRooms(openRooms);
   domUpdates.postFillRate(admin.bookings
     .getOccupancyRatio(utility.showToday()));
-  books.forEach(book => domUpdates.postTodaysBookings(book));
+  books.forEach(book => domUpdates.postTodaysBookings(book, admin.customers.all, admin.rooms.all));
   services.forEach(order => domUpdates.postTodaysOrders(order));
 }
 
@@ -122,9 +129,10 @@ function unbookRoom(event) {
     let user = admin.currentCustomer;
     let dataID = $(event.target).closest('tr').attr('data-id');
     let index = admin.bookings.all
-      .indexOf(booking => 
-        (booking.date === dataID && booking.userID === user.id));
-    admin.bookings.all.splice(index, 1);
+      .findIndex(booking => {
+        return booking.date === dataID && booking.userID === user.id;
+      });
+    admin.bookings.unbookRoom(index);
     $(event.target).closest('tr').remove();
   }
 }
