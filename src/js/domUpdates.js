@@ -69,14 +69,14 @@ export default {
           .filter(letter => letter !== ' ')
           .join('');
         $('.rooms-admin-table').append(`
-          <tr id="rm${room.number}" class="book ${newClass}">
+          <tr data-id="${room.number}" class="book ${newClass}">
           <td>${room.number}</td>
           <td>${room.roomType.toUpperCase()}</td>
           <td>${room.numBeds}</td>
           <td>${room.bedSize.toUpperCase()}</td>
           <td>${avail}</td>
           <td>$${room.costPerNight}</td>
-          <td><input id="book${room.number}" value="Book" type="submit"></td>
+          <td><input class="book-room" value="Book" type="submit"></td>
           </tr>`);
       });
       $('#rooms-count').text(`${rooms.length} rooms available on ${$('.rooms-search-input').val()}`);
@@ -133,6 +133,32 @@ export default {
       $('.book').hide();
       $(`.${type}`).show();
     }
+  },
+
+  postUserOrders(orders) {
+    if (orders.length < 1) {
+      $('.ordered').remove();
+      $('.message').remove();
+      this.noOrdersError();
+    } else {
+      $('.ordered').remove();
+      $('.message').remove();
+      orders.forEach(order => {
+        $('.rooms-orders-table').append(`
+        <tr data-id="${order.date}" class="ordered">
+        <td>${order.date}</td>
+        <td>${order.food}</td>
+        <td>${order.totalCost}</td>
+        <td><input class="cancel-food" value="Cancel" type="submit"></td>
+        </tr>`);
+      });
+    }
+  },
+
+  noOrdersError() {
+    $('.rooms-orders-table').append(`<tr class="ordered error">
+    <td colspan="4">Error: No Orders Under This Guest</td>
+    </tr>`);
   }
 
 }

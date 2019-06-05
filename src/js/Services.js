@@ -10,7 +10,7 @@ class Services {
   }
 
   getHistory(userID) {
-    console.log(userID)
+    return this.all.filter(service => service.userID === userID);
   }
 
   getTotalDebt(today) {

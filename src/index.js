@@ -73,6 +73,20 @@ $('.rooms-search-form').click(() => {
   domUpdates.filterRoomsList(type);
 });
 
+$('.rooms-admin-table').click(event => {
+  event.preventDefault();
+  if (!$(event.target).hasClass('book-room')) {
+    return null;
+  } else {
+    let user = admin.currentCustomer;
+    let dataID = $(event.target).closest('tr').attr('data-id');
+    let date = utility.showToday();
+    admin.bookings.bookRoom(user, date, parseInt(dataID));
+    loadUserBookings(user);
+    $(event.target).closest('tr').remove();
+  }
+})
+
 //--------- FUNCTIONS --------->
 
 async function loadFetchData() {
@@ -114,12 +128,13 @@ function loadSelectedUserData(user) {
 }
 
 function loadUserBookings(user) {
-  const books = admin.bookings.getUserHistory(user.id);
+  let books = admin.bookings.getUserHistory(user.id);
   domUpdates.postUserBookings(admin, books);
 }
 
-function loadUserOrders() {
-  //
+function loadUserOrders(user) {
+  let orders = admin.services.getHistory(user.id);
+  domUpdates.postUserOrders(orders);
 }
 
 function unbookRoom(event) {

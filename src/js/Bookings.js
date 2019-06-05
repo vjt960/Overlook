@@ -7,12 +7,10 @@ class Bookings {
   }
   
   bookRoom(user, date, rmNumber) {
-    if (this.all.find(booking => booking.date === date)) {
-      this.returnError();
-    } else {
-      let book = {userID: [user.id], date: [date], roomNumber: [rmNumber]};
-      this.all.push(book);
-    }
+    console.log(rmNumber)
+    let book = {userID: user.id, date, roomNumber: rmNumber};
+    this.all.push(book);
+    return book;
   }
 
   unbookRoom(index) {
@@ -31,11 +29,6 @@ class Bookings {
       .filter(room => bookedRooms
         .includes(room.number) === false);
     return avail.sort((a, b) => a.roomType.length - b.roomType.length);
-  }
-
-  filterRoomsByType(rooms, type) {
-    //capture array of vacant rooms;
-    //filter by type;
   }
 
   getOccupancyRatio(today) {
