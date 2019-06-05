@@ -5,7 +5,7 @@ class Bookings {
   }
   
   bookRoom(user, date, rmNumber) {
-    let book = {userID: user.id, date, roomNumber: rmNumber};
+    let book = {userID: user.id, date: date, roomNumber: rmNumber};
     this.all.push(book);
     return book;
   }
