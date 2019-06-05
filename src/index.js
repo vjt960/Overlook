@@ -65,13 +65,26 @@ $('.rooms-search-form').submit(event => {
 $('.rooms-user-table').click(event => {
   event.preventDefault();
   unbookRoom(event);
-  // upgradeRoom(event);
 });
 
 $('.rooms-search-form').click(() => {
   let type = $('.select-suite').val();
   domUpdates.filterRoomsList(type);
 });
+
+$('.rooms-admin-table').click(event => {
+  event.preventDefault();
+  if (!$(event.target).hasClass('book-room')) {
+    return null;
+  } else {
+    let user = admin.currentCustomer;
+    let dataID = $(event.target).closest('tr').attr('data-id');
+    let date = utility.showToday();
+    admin.bookings.bookRoom(user, date, parseInt(dataID));
+    loadUserBookings(user);
+    $(event.target).closest('tr').remove();
+  }
+})
 
 //--------- FUNCTIONS --------->
 
@@ -98,8 +111,10 @@ async function loadMainTab() {
   domUpdates.postNumOfOpenRooms(openRooms);
   domUpdates.postFillRate(admin.bookings
     .getOccupancyRatio(utility.showToday()));
-  books.forEach(book => domUpdates.postTodaysBookings(book, admin.customers.all, admin.rooms.all));
+  books.forEach(book => domUpdates
+    .postTodaysBookings(book, admin.customers.all, admin.rooms.all));
   services.forEach(order => domUpdates.postTodaysOrders(order));
+  domUpdates.postServiceOrders(admin, utility.showToday());
 }
 
 function displayPlaceholders() {
@@ -114,12 +129,14 @@ function loadSelectedUserData(user) {
 }
 
 function loadUserBookings(user) {
-  const books = admin.bookings.getUserHistory(user.id);
+  let books = admin.bookings.getUserHistory(user.id);
   domUpdates.postUserBookings(admin, books);
 }
 
-function loadUserOrders() {
-  //
+function loadUserOrders(user) {
+  let orders = admin.services.getHistory(user.id);
+  domUpdates.postUserOrders(orders);
+  domUpdates.postUserBilling(admin, utility.showToday());
 }
 
 function unbookRoom(event) {

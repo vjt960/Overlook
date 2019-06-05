@@ -37,12 +37,4 @@ export default {
     let showTime = `${h}:${m}:${s}`;
     $('h2').text(`${showToday} _ ${showTime}`);
   }
-
-
-  // calculateBill() {
-  //   //
-  // },
-  // authenticateUser() {
-  //   //
-  // }
 }
