@@ -192,8 +192,8 @@ export default {
   },
 
   postRoomService(foods) {
+    $('.rm-service').remove();
     foods.forEach(food => {
-      $('.rooms-orders-table').remove();
       $('.rooms-orders-table').append(`
       <tr data-id="${food}" class="rm-service">
       <td>${food}</td>
