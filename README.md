@@ -9,3 +9,7 @@ Overlook is an employee web portal that allows efficient management of Hotel ser
 ![main](https://raw.githubusercontent.com/vjt960/Overlook/master/src/images/main.jpg) 
 
 ![rooms](https://raw.githubusercontent.com/vjt960/Overlook/master/src/images/rooms.jpg) 
+
+![orders](https://raw.githubusercontent.com/vjt960/Overlook/master/src/images/orders.jpg) 
+
+![customer](https://raw.githubusercontent.com/vjt960/Overlook/master/src/images/customer.jpg) 
