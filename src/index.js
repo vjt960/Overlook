@@ -84,6 +84,25 @@ $('.rooms-admin-table').click(event => {
     loadUserBookings(user);
     $(event.target).closest('tr').remove();
   }
+});
+
+$('.rooms-orders-table').click(event => {
+  event.preventDefault();
+  if (!$(event.target).hasClass('purchase')) {
+    return null;
+  } else {
+    let dataID = $(event.target).closest('tr').attr('data-id');
+    let date = utility.showToday();
+    let user = admin.currentCustomer;
+    let order = {
+      userID: user.id,
+      date,
+      food: dataID,
+      totalCost: 951.09
+    }
+    admin.services.placeOrder(order);
+    loadSelectedUserData(user);
+  }
 })
 
 //--------- FUNCTIONS --------->
@@ -101,20 +120,19 @@ async function loadFetchData() {
 async function loadMainTab() {
   await data;
   const books = admin.bookings.getCurrentBookings(utility.showToday());
-  const services = admin.services.getTotalDebt(utility.showToday());
   const openRooms = admin.bookings.getAvailableRooms(utility.showToday());
   const popularDate = admin.bookings.findPopularBookingDate();
   const unpopularDate = admin.bookings.findBestBookingDate();
   displayPlaceholders();
   domUpdates.postBookingDates(popularDate, unpopularDate);
-  domUpdates.postTodaysDebt(admin.services.getTotalDebt(utility.showToday()));
+  domUpdates.postTodaysDebt(admin, utility.showToday());
   domUpdates.postNumOfOpenRooms(openRooms);
   domUpdates.postFillRate(admin.bookings
     .getOccupancyRatio(utility.showToday()));
   books.forEach(book => domUpdates
     .postTodaysBookings(book, admin.customers.all, admin.rooms.all));
-  services.forEach(order => domUpdates.postTodaysOrders(order));
   domUpdates.postServiceOrders(admin, utility.showToday());
+  domUpdates.postAdminData(admin);
 }
 
 function displayPlaceholders() {
@@ -126,6 +144,7 @@ function displayPlaceholders() {
 function loadSelectedUserData(user) {
   loadUserBookings(user);
   loadUserOrders(user);
+  showMenu();
 }
 
 function loadUserBookings(user) {
@@ -152,4 +171,9 @@ function unbookRoom(event) {
     admin.bookings.unbookRoom(index);
     $(event.target).closest('tr').remove();
   }
+}
+
+function showMenu() {
+  let menu = ['Carrots', 'String Cheese', 'Turducken'];
+  domUpdates.postRoomService(menu);
 }

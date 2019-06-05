@@ -33,7 +33,10 @@
   height: 100%;
 
   .main-booking { @include labelGrid(booking);}
-  .main-orders { @include labelGrid(orders);}
+  .main-orders {
+    @include labelGrid(orders);
+    overflow-y: auto;
+  }
   .main-rooms { @include labelGrid(rooms);}
   .main-admin { @include labelGrid(admin);}
 }
@@ -71,8 +74,14 @@
     overflow-y: auto;    
   }
   .rooms-user { @include labelGrid(user);}
-  .rooms-space { @include labelGrid(spaces);}
-  .rooms-orders { @include labelGrid(orders);}
+  .rooms-space {
+    @include labelGrid(spaces);
+    overflow-y: auto;   
+  }
+  .rooms-orders {
+    @include labelGrid(orders);
+    overflow-y: auto;   
+  }
 
   .rooms-admin-table {
     @include defaultTable();
@@ -123,7 +132,11 @@
     grid-gap: 10px;
     grid-template-columns: 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 2fr 1fr;
-    grid-template-areas: "search search bills bills" "orders orders bills bills" "orders orders user user" "orders orders user user";
+    grid-template-areas: 
+    "search search bills bills" 
+    "orders orders bills bills" 
+    "orders orders user user" 
+    "orders orders user user";
     height: 100%;
   
   .orders-search {
@@ -136,6 +149,7 @@
   
   .orders-orders {
     @include labelGrid(orders);
+    overflow-y: auto;   
     &-table {
       @include defaultTable();
     }
@@ -147,6 +161,7 @@
 
   .orders-user {
     @include labelGrid(user);
+    overflow-y: auto;   
     &-table {
       @include defaultTable();
     }

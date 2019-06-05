@@ -5,7 +5,7 @@ class Bookings {
   }
   
   bookRoom(user, date, rmNumber) {
-    let book = {userID: user.id, date: date, roomNumber: rmNumber};
+    let book = {userID: user.id, date, roomNumber: rmNumber};
     this.all.push(book);
     return book;
   }
@@ -13,11 +13,7 @@ class Bookings {
   unbookRoom(index) {
     this.all.splice(index, 1);
   }
-
-  upgradeRoom() {
-    //
-  }
-
+  
   getAvailableRooms(today) {
     let rooms = this.rooms;
     let bookedRooms = this.all.filter(booking => booking.date === today)
@@ -58,6 +54,17 @@ class Bookings {
 
   getCurrentBookings(today) {
     return this.all.filter(booking => booking.date === today);
+  }
+
+  calculateRevenue(today) {
+    let books = this.getCurrentBookings(today);
+    books = books.map(book => book.roomNumber);
+    let rooms = books.reduce((a, b) => {
+      a[b] = this.rooms.all.find(room => room.number === b);
+      return a;
+    }, {});
+    return Object.values(rooms)
+      .reduce((a, b) => a.costPerNight + b.costPerNight);
   }
 }
 

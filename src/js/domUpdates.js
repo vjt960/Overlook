@@ -9,10 +9,6 @@ export default {
       .append(`<p>${user} | Room #${booking.roomNumber} | ${room}</p>`);
   },
 
-  postTodaysOrders(order) {
-    $('.main-orders').append(`<p>here some ${order.date} shit</p>`);
-  },
-
   postNumOfOpenRooms(rooms) {
     $('.main-rooms')
       .append(`<p>Rooms available: ${rooms.length} out of ${200}`);
@@ -23,11 +19,11 @@ export default {
       .append(`<p>Hotel occupancy is currently at ${Math.round(ratio)}%`);
   },
 
-  postTodaysDebt(orders) {
-    let debt;
-    debt = orders.length < 1 ? 0 
-      : orders.reduce((a, b) => a + b.totalCost);
-    $('.main-orders').append(`<p>Today's earnings: $${debt}</p>`);
+  postTodaysDebt(admin, date) {
+    let serviceRev = admin.services.calculateTotalDebt(date);
+    let roomRev = admin.bookings.calculateRevenue(date).toFixed(2);
+    let total = parseInt(serviceRev) + parseInt(roomRev)
+    $('.main-orders').append(`<p>Today's earnings: $${total}</p>`);
   },
 
   postBookingDates(date1, date2) {
@@ -159,10 +155,11 @@ export default {
   },
 
   noOrdersError(key) {
-    $('.orders-orders-table').append(`<tr class="ordered error">
+    $('.orders-orders-table').append(`<tr class="ordered error noOrder">
         <td colspan="4">No Orders Today</td>
         </tr>`);
     if (!key) {
+      $('.noOrder').remove();
       $('.orders-user-table').append(`<tr class="ordered error">
         <td colspan="4">Error: No Orders Under This Guest</td>
         </tr>`);
@@ -175,6 +172,7 @@ export default {
       this.noOrdersError(true);
     } else {
       orders.forEach(order => {
+        $('.noOrder').remove();
         $('.orders-orders-table').append(`
         <tr data-id="${order.date}" class="services">
         <td>${order.date}</td>
@@ -188,8 +186,27 @@ export default {
 
   postUserBilling(admin, date) {
     let user = admin.currentCustomer;
-    let debtNow = admin.services.calculateTotalDebt(date);
+    let debtNow = admin.services.findTodaysBill(user.id, date);
     let debtAll = admin.services.checkout(user.id);
     $('#bills-count').text(`Billing Today: $${debtNow}  |  Total: $${debtAll}`);
+  },
+
+  postRoomService(foods) {
+    foods.forEach(food => {
+      $('.rooms-orders-table').append(`
+      <tr data-id="${food}" class="rm-service">
+      <td>${food}</td>
+      <td>$951.09</td>
+      <td><input class="purchase" value="Order" type="submit"></td>
+      </tr>
+      `);
+    })
+  },
+
+  postAdminData(admin) {
+    $('h6').append(`
+    Total Orders: ${admin.services.all.length} 
+    | Total Bookings: ${admin.bookings.all.length}
+    `)
   }
 }
