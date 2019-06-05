@@ -3,6 +3,10 @@ class Services {
     this.all = services;
   }
 
+  placeOrder(order) {
+    this.all.push(order);
+  }
+
   getServiceOrders(date) {
     return this.all.filter(order => order.date === date);
   }
@@ -15,12 +19,23 @@ class Services {
     return this.all.filter(order => order.date === today);
   }
 
+  findTodaysBill(userID, date) {
+    let bills = this.getHistory(userID);
+    let bill = bills.find(obj => obj.date === date);
+    if (!bill) {
+      return 0;
+    } else {
+      return bill.totalCost;
+    }
+  }
+
   calculateTotalDebt(today) {
     let bill = this.all.filter(order => order.date === today);
     if (bill.length < 1) {
       return 0;
     } else {
-      return bill.reduce((a, b) => a.totalCost + b.totalCost);
+      bill = bill.map(obj => obj.totalCost)
+      return bill.reduce((a, b) => a + b);
     }
   }
 
