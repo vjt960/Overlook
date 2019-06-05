@@ -5,7 +5,8 @@ export default {
   postTodaysBookings(booking, userList, rooms) {
     let user = userList.find(user => user.id === booking.userID).name;
     let room = rooms.find(room => room.number === booking.roomNumber).roomType;
-    $('.main-booking').append(`<p>${user} | Room #${booking.roomNumber} | ${room}</p>`);
+    $('.main-booking')
+      .append(`<p>${user} | Room #${booking.roomNumber} | ${room}</p>`);
   },
 
   postTodaysOrders(order) {
@@ -79,7 +80,9 @@ export default {
           <td><input class="book-room" value="Book" type="submit"></td>
           </tr>`);
       });
-      $('#rooms-count').text(`${rooms.length} rooms available on ${$('.rooms-search-input').val()}`);
+      $('#rooms-count')
+        .text(`${rooms.length} rooms available on ${$('.rooms-search-input')
+          .val()}`);
       $('.rooms-search-input').val('');
     }
   },
@@ -144,7 +147,7 @@ export default {
       $('.ordered').remove();
       $('.message').remove();
       orders.forEach(order => {
-        $('.rooms-orders-table').append(`
+        $('.orders-user-table').append(`
         <tr data-id="${order.date}" class="ordered">
         <td>${order.date}</td>
         <td>${order.food}</td>
@@ -155,10 +158,38 @@ export default {
     }
   },
 
-  noOrdersError() {
-    $('.rooms-orders-table').append(`<tr class="ordered error">
-    <td colspan="4">Error: No Orders Under This Guest</td>
-    </tr>`);
-  }
+  noOrdersError(key) {
+    $('.orders-orders-table').append(`<tr class="ordered error">
+        <td colspan="4">No Orders Today</td>
+        </tr>`);
+    if (!key) {
+      $('.orders-user-table').append(`<tr class="ordered error">
+        <td colspan="4">Error: No Orders Under This Guest</td>
+        </tr>`);
+    }
+  },
 
+  postServiceOrders(admin, date) {
+    let orders = admin.services.getServiceOrders(date);
+    if (orders.length < 1) {
+      this.noOrdersError(true);
+    } else {
+      orders.forEach(order => {
+        $('.orders-orders-table').append(`
+        <tr data-id="${order.date}" class="services">
+        <td>${order.date}</td>
+        <td>${order.food}</td>
+        <td>${order.totalCost}</td>
+        </tr>
+        `);
+      })
+    }
+  },
+
+  postUserBilling(admin, date) {
+    let user = admin.currentCustomer;
+    let debtNow = admin.services.calculateTotalDebt(date);
+    let debtAll = admin.services.checkout(user.id);
+    $('#bills-count').text(`Billing Today: $${debtNow}  |  Total: $${debtAll}`);
+  }
 }

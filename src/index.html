@@ -36,10 +36,37 @@
         </section>
         <section id="tab-2" class="tab-content">
           <div class="orders-grid-container">
-            <article class="search"></article>
-            <article class="orders"></article>
-            <article class="bills"></article>
-            <article class="user"></article>
+            <article class="orders-search">
+              <legend>Search Service Orders</legend>
+              <form class="orders-search-form">
+                <input class="orders-search-btn" type="submit" value="Search">
+                <input class="orders-search-input" placeholder="Search By Date" type="search">
+                <h5 class="orders-service-date"></h5>
+              </form>
+            </article>
+            <article class="orders-orders">
+              <h4>Service Orders</h4>
+              <table class="orders-orders-table" border="1">
+                <tr>
+                  <th>Date</th>
+                  <th>Food</th>
+                  <th>Cost</th>
+                </tr>
+              </table>
+            </article>
+            <article class="orders-bills">
+              <h4>Guest's Billings</h4>
+              <legend id="bills-count"></legend>
+            </article>
+            <article class="orders-user">
+              <h4>Guest's Orders</h4>
+              <table class="orders-user-table" border="1">
+                <tr>
+                  <th>Date</th><th>Food</th>
+                  <th>Cost</th><th>Cancel</th>
+                </tr>
+              </table>
+            </article>
           </div>
         </section>
         <section id="tab-3" class="tab-content">
@@ -82,7 +109,7 @@
                 </table>
             </article>
             <article class="rooms-orders">
-              <h4>Guest's Orders</h4>
+              <h4>Room Services</h4>
               <table class="rooms-orders-table" border="1">
                   <tr>
                     <th>Date</th><th>Food</th>

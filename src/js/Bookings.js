@@ -1,5 +1,3 @@
-// import netData from '../../fetch-data/data';
-
 class Bookings {
   constructor(data, rooms) {
     this.all = data;
@@ -7,7 +5,6 @@ class Bookings {
   }
   
   bookRoom(user, date, rmNumber) {
-    console.log(rmNumber)
     let book = {userID: user.id, date, roomNumber: rmNumber};
     this.all.push(book);
     return book;
@@ -17,8 +14,8 @@ class Bookings {
     this.all.splice(index, 1);
   }
 
-  upgradeRoom(userID, date, newRoom) {
-    console.log(date);
+  upgradeRoom() {
+    //
   }
 
   getAvailableRooms(today) {
@@ -61,10 +58,6 @@ class Bookings {
 
   getCurrentBookings(today) {
     return this.all.filter(booking => booking.date === today);
-  }
-
-  returnError() {
-    return 'Error';
   }
 }
 

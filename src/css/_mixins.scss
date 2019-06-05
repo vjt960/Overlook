@@ -117,3 +117,49 @@
   color: $textColor;
   background-color: $inputColor;
 }
+
+@mixin gridOrdersContent() {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr 2fr 1fr;
+    grid-template-areas: "search search bills bills" "orders orders bills bills" "orders orders user user" "orders orders user user";
+    height: 100%;
+  
+  .orders-search {
+    @include labelGrid(search);
+
+    &-form {
+      @include searchForm();
+    }
+  }
+  
+  .orders-orders {
+    @include labelGrid(orders);
+    &-table {
+      @include defaultTable();
+    }
+  }
+
+  .orders-bills {
+    @include labelGrid(bills);
+  }
+
+  .orders-user {
+    @include labelGrid(user);
+    &-table {
+      @include defaultTable();
+    }
+  }
+}
+
+@mixin searchForm() {
+  height: 100%;
+  width: 75%;
+  display: flex;
+  flex-direction: row;
+  .orders-search-btn {
+  width: 100px;
+  height: 22px;
+  }
+}

@@ -65,7 +65,6 @@ $('.rooms-search-form').submit(event => {
 $('.rooms-user-table').click(event => {
   event.preventDefault();
   unbookRoom(event);
-  // upgradeRoom(event);
 });
 
 $('.rooms-search-form').click(() => {
@@ -112,8 +111,10 @@ async function loadMainTab() {
   domUpdates.postNumOfOpenRooms(openRooms);
   domUpdates.postFillRate(admin.bookings
     .getOccupancyRatio(utility.showToday()));
-  books.forEach(book => domUpdates.postTodaysBookings(book, admin.customers.all, admin.rooms.all));
+  books.forEach(book => domUpdates
+    .postTodaysBookings(book, admin.customers.all, admin.rooms.all));
   services.forEach(order => domUpdates.postTodaysOrders(order));
+  domUpdates.postServiceOrders(admin, utility.showToday());
 }
 
 function displayPlaceholders() {
@@ -135,6 +136,7 @@ function loadUserBookings(user) {
 function loadUserOrders(user) {
   let orders = admin.services.getHistory(user.id);
   domUpdates.postUserOrders(orders);
+  domUpdates.postUserBilling(admin, utility.showToday());
 }
 
 function unbookRoom(event) {

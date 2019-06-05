@@ -1,12 +1,10 @@
-// import netData from '../../fetch-data/data';
-
 class Services {
   constructor(services) {
     this.all = services;
   }
 
-  calculateBill(userID) {
-    console.log(userID);
+  getServiceOrders(date) {
+    return this.all.filter(order => order.date === date);
   }
 
   getHistory(userID) {
@@ -17,8 +15,23 @@ class Services {
     return this.all.filter(order => order.date === today);
   }
 
-  returnError() {
-    return 'Error';
+  calculateTotalDebt(today) {
+    let bill = this.all.filter(order => order.date === today);
+    if (bill.length < 1) {
+      return 0;
+    } else {
+      return bill.reduce((a, b) => a.totalCost + b.totalCost);
+    }
+  }
+
+  checkout(userID) {
+    let bill = this.getHistory(userID);
+    if (bill.length < 1) {
+      return 0;
+    } else {
+      let receipt = bill.map(obj => obj.totalCost);
+      return receipt.reduce((a, b) => a + b);
+    }
   }
 }
 
